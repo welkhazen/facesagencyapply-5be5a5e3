@@ -86,17 +86,33 @@ const LogoAnimation = ({ onComplete }: LogoAnimationProps) => {
   }, [onComplete, letters.length]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground overflow-hidden">
       {/* Camera Flash Effect - covers entire screen */}
       {showFlash && (
-        <div 
-          className={`absolute inset-0 bg-background pointer-events-none transition-opacity duration-300 ${
-            flashPhase === "in" ? "opacity-0" : "opacity-100"
-          }`}
-          style={{
-            animation: flashPhase === "in" ? "flashIn 0.3s ease-out forwards" : undefined
-          }}
-        />
+        <>
+          {/* Main flash */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle at center, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.7) 100%)',
+              animation: flashPhase === "in" 
+                ? "cameraFlashIn 0.15s ease-out forwards" 
+                : flashPhase === "hold" 
+                  ? "none" 
+                  : undefined,
+              opacity: flashPhase === "in" ? 0 : 1,
+            }}
+          />
+          {/* Flash burst rays */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.3) 10deg, transparent 20deg, rgba(255,255,255,0.2) 30deg, transparent 40deg, rgba(255,255,255,0.3) 50deg, transparent 60deg)',
+              animation: flashPhase === "in" ? "flashBurst 0.2s ease-out forwards" : undefined,
+              opacity: flashPhase === "in" ? 0 : flashPhase === "hold" ? 0.5 : 0,
+            }}
+          />
+        </>
       )}
 
       {/* Logo Letters */}
