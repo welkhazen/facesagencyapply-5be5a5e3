@@ -153,16 +153,19 @@
   animation: fadeInUp 0.5s ease-out forwards;
 }
 
-/* Partner logos smooth scrolling */
-@keyframes scrollSlow {
+/* Partner logos centered scrolling */
+@keyframes scrollCenter {
   0% {
-    transform: translateX(0);
+    transform: translateX(30%);
+  }
+  50% {
+    transform: translateX(-30%);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(30%);
   }
 }
 
-.animate-scroll-slow {
-  animation: scrollSlow 60s linear infinite;
+.animate-scroll-center {
+  animation: scrollCenter 25s ease-in-out infinite;
 }

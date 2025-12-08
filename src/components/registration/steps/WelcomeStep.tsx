@@ -39,12 +39,13 @@ const WelcomeStep = ({ onGenderSelect }: WelcomeStepProps) => {
         </div>
       </div>
 
-      {/* Partner logos - smooth scrolling banner at bottom */}
-      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border py-3 overflow-hidden">
-        <p className="text-xs text-muted-foreground text-center mb-2">Trusted by leading brands</p>
-        <div className="flex animate-scroll-slow whitespace-nowrap">
-          <img src={partnersFull} alt="Partners" className="h-10 md:h-12 object-contain opacity-80 mx-4 inline-block" />
-          <img src={partnersFull} alt="Partners" className="h-10 md:h-12 object-contain opacity-80 mx-4 inline-block" />
+      {/* Partner logos - centered scrolling banner at bottom */}
+      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border py-4">
+        <p className="text-xs text-muted-foreground text-center mb-3">Trusted by leading brands</p>
+        <div className="flex justify-center overflow-hidden mx-auto max-w-[90vw]">
+          <div className="animate-scroll-center">
+            <img src={partnersFull} alt="Partners" className="h-16 md:h-20 object-contain" />
+          </div>
         </div>
         {/* Disclaimer - centered at bottom */}
         <p className="text-[9px] text-muted-foreground/50 text-center mt-3 pb-1">
