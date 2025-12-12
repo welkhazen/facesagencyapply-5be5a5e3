@@ -62,17 +62,21 @@ const LogoAnimation = ({ onComplete }: LogoAnimationProps) => {
       setLogoFading(true);
     }, lettersDuration + 200);
 
-    // After logo fades, play sound and start flash simultaneously
+    // After logo fades, start flash
     const flashStartTimeout = setTimeout(() => {
-      playCameraSound();
       setShowFlash(true);
       setFlashPhase("in");
     }, lettersDuration + 600);
 
-    // Flash reaches full intensity quickly
+    // Play sound when flash is at peak intensity (middle of flash)
+    const soundTimeout = setTimeout(() => {
+      playCameraSound();
+    }, lettersDuration + 700);
+
+    // Flash reaches full intensity
     const flashHoldTimeout = setTimeout(() => {
       setFlashPhase("hold");
-    }, lettersDuration + 750);
+    }, lettersDuration + 800);
 
     // Complete - transition after audio finishes
     const completeTimeout = setTimeout(() => {
@@ -83,6 +87,7 @@ const LogoAnimation = ({ onComplete }: LogoAnimationProps) => {
       clearInterval(letterInterval);
       clearTimeout(logoFadeTimeout);
       clearTimeout(flashStartTimeout);
+      clearTimeout(soundTimeout);
       clearTimeout(flashHoldTimeout);
       clearTimeout(completeTimeout);
       // Don't pause audio on cleanup - let it finish playing
