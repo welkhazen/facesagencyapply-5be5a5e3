@@ -1,16 +1,14 @@
 import partnersFull from "@/assets/partners-full.png";
-
 interface WelcomeStepProps {
   onGenderSelect: (gender: "male" | "female") => void;
 }
-
-const WelcomeStep = ({ onGenderSelect }: WelcomeStepProps) => {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 pb-32">
-      <h1 
-        className="text-5xl md:text-7xl font-bold mb-4 tracking-wider"
-        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-      >
+const WelcomeStep = ({
+  onGenderSelect
+}: WelcomeStepProps) => {
+  return <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 pb-32">
+      <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-wider" style={{
+      fontFamily: "'Bebas Neue', sans-serif"
+    }}>
         <span className="text-foreground">FACE</span>
         <span className="text-primary">S</span>
       </h1>
@@ -24,16 +22,10 @@ const WelcomeStep = ({ onGenderSelect }: WelcomeStepProps) => {
       <div className="w-full max-w-sm mb-8">
         <p className="text-muted-foreground text-sm mb-6">I am a...</p>
         <div className="flex gap-4">
-          <button
-            onClick={() => onGenderSelect("female")}
-            className="flex-1 py-6 px-4 rounded-xl border-2 border-border bg-card hover:border-primary hover:bg-primary/5 transition-all duration-200 group"
-          >
+          <button onClick={() => onGenderSelect("female")} className="flex-1 py-6 px-4 rounded-xl border-2 border-border bg-card hover:border-primary hover:bg-primary/5 transition-all duration-200 group">
             <span className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">Female</span>
           </button>
-          <button
-            onClick={() => onGenderSelect("male")}
-            className="flex-1 py-6 px-4 rounded-xl border-2 border-border bg-card hover:border-primary hover:bg-primary/5 transition-all duration-200 group"
-          >
+          <button onClick={() => onGenderSelect("male")} className="flex-1 py-6 px-4 rounded-xl border-2 border-border bg-card hover:border-primary hover:bg-primary/5 transition-all duration-200 group">
             <span className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">Male</span>
           </button>
         </div>
@@ -43,15 +35,13 @@ const WelcomeStep = ({ onGenderSelect }: WelcomeStepProps) => {
       <div className="fixed bottom-0 left-0 right-0 bg-background py-8">
         <p className="text-sm text-muted-foreground text-center mb-6">Trusted by leading brands</p>
         <div className="flex justify-center mx-auto px-4">
-          <img src={partnersFull} alt="Partners" className="h-40 md:h-52 lg:h-64 object-contain animate-camera-flash" />
+          <img src={partnersFull} alt="Partners" className="h-40 md:h-52 lg:h-64 animate-camera-flash object-cover opacity-100 shadow-none border-double rounded-md" />
         </div>
         {/* Disclaimer - centered at bottom */}
         <p className="text-xs text-muted-foreground/60 text-center mt-6">
           Note: Due to high demand, not everyone will be selected.
         </p>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default WelcomeStep;
