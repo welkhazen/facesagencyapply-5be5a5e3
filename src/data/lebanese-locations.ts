@@ -422,6 +422,23 @@ export const hairColors = [
   "Other",
 ];
 
+export const hairTypes = [
+  "Straight",
+  "Wavy",
+  "Curly",
+  "Coily",
+  "Kinky",
+];
+
+export const hairLengths = [
+  "Bald",
+  "Buzz Cut",
+  "Short",
+  "Medium",
+  "Long",
+  "Very Long",
+];
+
 export const skinTones = [
   "Fair",
   "Light",

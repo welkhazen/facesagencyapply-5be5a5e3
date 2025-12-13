@@ -56,18 +56,28 @@ export const languagesSchema = z.object({
   languages: z.array(z.string()).min(1, "Please select at least one language"),
 });
 
-export const physicalFeaturesSchema = z.object({
+export const appearanceSchema = z.object({
+  eyeColor: z.string().min(1, "Eye color is required"),
+  hairColor: z.string().min(1, "Hair color is required"),
+  hairType: z.string().min(1, "Hair type is required"),
+  hairLength: z.string().min(1, "Hair length is required"),
+  skinTone: z.string().min(1, "Skin tone is required"),
+});
+
+export const measurementsSchema = z.object({
   height: z.string().min(1, "Height is required"),
   weight: z.string().min(1, "Weight is required"),
   pantSize: z.string().min(1, "Pant size is required"),
-  jacketSize: z.string().min(1, "Jacket size is required"),
+  jacketSize: z.string().min(1, "Jacket/Blouse size is required"),
   shoeSize: z.string().min(1, "Shoe size is required"),
-  eyeColor: z.string().min(1, "Eye color is required"),
-  hairColor: z.string().min(1, "Hair color is required"),
-  skinTone: z.string().min(1, "Skin tone is required"),
+  waist: z.string().min(1, "Waist is required"),
+  bust: z.string().min(1, "Bust/Chest is required"),
+  hips: z.string().min(1, "Hips is required"),
+  shoulders: z.string().min(1, "Shoulders is required"),
 });
 
 export type MainInfoData = z.infer<typeof mainInfoSchema>;
 export type AddressData = z.infer<typeof addressSchema>;
 export type LanguagesData = z.infer<typeof languagesSchema>;
-export type PhysicalFeaturesData = z.infer<typeof physicalFeaturesSchema>;
+export type AppearanceData = z.infer<typeof appearanceSchema>;
+export type MeasurementsData = z.infer<typeof measurementsSchema>;
