@@ -7,7 +7,8 @@ import WelcomeStep from "./steps/WelcomeStep";
 import MainInfoStep from "./steps/MainInfoStep";
 import AddressStep from "./steps/AddressStep";
 import LanguagesStep from "./steps/LanguagesStep";
-import PhysicalFeaturesStep from "./steps/PhysicalFeaturesStep";
+import AppearanceStep from "./steps/AppearanceStep";
+import MeasurementsStep from "./steps/MeasurementsStep";
 import TalentsStep from "./steps/TalentsStep";
 import AvailabilityStep from "./steps/AvailabilityStep";
 import PhotoUploadStep from "./steps/PhotoUploadStep";
@@ -16,7 +17,8 @@ import {
   mainInfoSchema,
   addressSchema,
   languagesSchema,
-  physicalFeaturesSchema,
+  appearanceSchema,
+  measurementsSchema,
 } from "@/lib/formValidation";
 
 interface FormData {
@@ -48,11 +50,14 @@ interface FormData {
   hips: string;
   eyeColor: string;
   hairColor: string;
+  hairType: string;
+  hairLength: string;
   skinTone: string;
   hasTattoos: boolean;
   hasPiercings: boolean;
   customEyeColor: string;
   customHairColor: string;
+  shoulders: string;
   talents: string[];
   customTalent: string;
   experience: string;
@@ -93,11 +98,14 @@ const initialFormData: FormData = {
   hips: "",
   eyeColor: "",
   hairColor: "",
+  hairType: "",
+  hairLength: "",
   skinTone: "",
   hasTattoos: false,
   hasPiercings: false,
   customEyeColor: "",
   customHairColor: "",
+  shoulders: "",
   talents: [],
   customTalent: "",
   experience: "",
@@ -116,7 +124,7 @@ const RegistrationForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
-  const totalSteps = 9; // Reduced by 1 since we merged Contact into Main
+  const totalSteps = 10; // Now 10 steps with Appearance and Measurements split
 
   const updateFormData = (field: string, value: string | string[] | boolean | File | null | Record<string, number>) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -169,7 +177,7 @@ const RegistrationForm = () => {
         break;
       }
       case 4: {
-        const result = physicalFeaturesSchema.safeParse(formData);
+        const result = appearanceSchema.safeParse(formData);
         if (!result.success) {
           const firstError = result.error.errors[0];
           toast({
@@ -181,8 +189,21 @@ const RegistrationForm = () => {
         }
         break;
       }
-      // Step 5 (Talents) is not mandatory
-      // Step 6 (Availability) and Step 7 (Photos) are not mandatory
+      case 5: {
+        const result = measurementsSchema.safeParse(formData);
+        if (!result.success) {
+          const firstError = result.error.errors[0];
+          toast({
+            title: "Validation Error",
+            description: firstError.message,
+            variant: "destructive",
+          });
+          return false;
+        }
+        break;
+      }
+      // Step 6 (Talents) is not mandatory
+      // Step 7 (Availability) and Step 8 (Photos) are not mandatory
     }
     return true;
   };
@@ -256,14 +277,16 @@ const RegistrationForm = () => {
       case 3:
         return <LanguagesStep data={formData} onChange={updateFormData} />;
       case 4:
-        return <PhysicalFeaturesStep data={formData} gender={formData.gender} onChange={updateFormData} />;
+        return <AppearanceStep data={formData} onChange={updateFormData} />;
       case 5:
-        return <TalentsStep data={formData} onChange={updateFormData} />;
+        return <MeasurementsStep data={formData} gender={formData.gender} onChange={updateFormData} />;
       case 6:
-        return <AvailabilityStep data={formData} onChange={updateFormData} />;
+        return <TalentsStep data={formData} onChange={updateFormData} />;
       case 7:
-        return <PhotoUploadStep data={formData} onChange={updateFormData} />;
+        return <AvailabilityStep data={formData} onChange={updateFormData} />;
       case 8:
+        return <PhotoUploadStep data={formData} onChange={updateFormData} />;
+      case 9:
         return <ReviewStep formData={formData} onSubmit={handleSubmit} onChange={updateFormData} isSubmitting={isSubmitting} />;
       default:
         return null;
