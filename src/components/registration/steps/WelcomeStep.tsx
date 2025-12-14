@@ -11,12 +11,25 @@ const WelcomeStep = ({
   return <div className="flex flex-col min-h-screen">
       {/* Main content area */}
       <div className="flex-1 flex flex-col items-center justify-center text-center px-4 pt-8 pb-4">
-        <h1 className="text-8xl md:text-[10rem] lg:text-[12rem] font-bold mb-6 tracking-wider" style={{
+        <h1 className="text-8xl md:text-[10rem] lg:text-[12rem] font-bold mb-4 tracking-wider" style={{
         fontFamily: "'Bebas Neue', sans-serif"
       }}>
           <span className="text-foreground">FACE</span>
           <span className="text-primary">S</span>
         </h1>
+
+        {/* Partner logos section - Our Customers */}
+        <div className="w-full mb-6">
+          <p className="text-sm text-muted-foreground text-center mb-3">
+            Our Customers
+          </p>
+          <div className="overflow-hidden">
+            <div className="logo-scroll-container animate-scroll-left">
+              <img src={partnersFull} alt="Partners" className="h-32 md:h-40 lg:h-48 object-contain px-4" />
+              <img src={partnersFull} alt="Partners" className="h-32 md:h-40 lg:h-48 object-contain px-4" />
+            </div>
+          </div>
+        </div>
 
         {phase === "ready-question" && <div className="animate-fade-in">
             <p className="text-lg md:text-xl text-muted-foreground mb-6 font-medium font-serif">Are you ready to have that chance to work, create, and perform, for the best and most favourable and recognizable brands internationally?</p>
@@ -71,22 +84,9 @@ const WelcomeStep = ({
           </div>}
       </div>
 
-      {/* Partner logos section - Netflix-style infinite scroll */}
-      <div className="bg-background py-6">
-        <p className="text-sm text-muted-foreground text-center mb-4">
-          Trusted by leading brands
-        </p>
-
-        {/* Single row - infinite scroll */}
-        <div className="overflow-hidden">
-          <div className="logo-scroll-container animate-scroll-left">
-            <img alt="Partners" className="h-32 md:h-40 lg:h-48 object-contain px-4" src="" />
-            <img src={partnersFull} alt="Partners" className="h-32 md:h-40 lg:h-48 object-contain px-4" />
-          </div>
-        </div>
-
-        {/* Disclaimer */}
-        <p className="text-xs text-muted-foreground/60 text-center mt-4">
+      {/* Disclaimer */}
+      <div className="bg-background py-4">
+        <p className="text-xs text-muted-foreground/60 text-center">
           Note: Due to high demand, not everyone will be selected.
         </p>
       </div>
