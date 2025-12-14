@@ -25,7 +25,7 @@ const WelcomeStep = ({
         {/* Middle section - Tagline & Partners */}
         <div className="flex-1 flex flex-col items-center justify-start py-4 md:py-6">
           {/* Tagline */}
-          <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground mb-12 md:mb-16 font-serif max-w-2xl font-semibold px-4">
+          <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground mb-12 md:mb-16 font-serif max-w-2xl font-semibold px-4 mt-8 md:mt-12">
             Want to have that chance to work, create, and perform, for the best and most recognizable brands internationally?
           </p>
 
