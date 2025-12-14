@@ -19,9 +19,7 @@ const WelcomeStep = ({
         </h1>
 
         {/* Tagline */}
-        <p className="text-lg md:text-xl text-muted-foreground mb-6 font-serif max-w-2xl font-semibold">
-          Are you ready to have that chance to work, create, and perform, for the best and most favourable and recognizable brands internationally?
-        </p>
+        <p className="text-lg md:text-xl text-muted-foreground mb-6 font-serif max-w-2xl font-semibold">Want to have that chance to work, create, and perform, for the best and most  recognizable brands internationally?</p>
 
         {/* Partner logos section - Our Customers */}
         <div className="w-full mb-6">
@@ -31,7 +29,7 @@ const WelcomeStep = ({
           <div className="overflow-hidden">
             <div className="logo-scroll-container animate-scroll-left">
               <img src={partnersFull} alt="Partners" className="h-32 md:h-40 lg:h-48 object-contain px-4" />
-              <img src={partnersFull} alt="Partners" className="h-32 md:h-40 lg:h-48 object-contain px-4" />
+              
             </div>
           </div>
         </div>
