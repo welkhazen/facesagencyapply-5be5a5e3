@@ -81,7 +81,7 @@ const WelcomeStep = ({
         <div className="overflow-hidden">
           <div className="logo-scroll-container animate-scroll-left">
             <img alt="Partners" className="h-32 md:h-40 lg:h-48 object-contain px-4" src="" />
-            <img alt="Partners" className="h-32 md:h-40 lg:h-48 object-contain px-4" src="/lovable-uploads/82db2c71-968a-4139-85fc-fb11d647a911.png" />
+            <img alt="Partners" src="/lovable-uploads/2deb1052-2f17-4966-bd3f-b0852e8b60f3.png" className="h-32 md:h-40 lg:h-48 px-4 object-fill" />
           </div>
         </div>
 
