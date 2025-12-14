@@ -44,7 +44,7 @@ const WelcomeStep = ({
         </div>
 
         {/* Bottom section - CTA */}
-        <div className="flex-shrink-0 w-full max-w-sm mx-auto">
+        <div className="flex-shrink-0 w-full max-w-sm mx-auto mb-8 md:mb-12">
           {phase === "ready-question" && <div className="animate-fade-in">
               <div className="bg-card border border-border rounded-xl p-4 mb-6">
                 <p className="text-foreground font-medium">
