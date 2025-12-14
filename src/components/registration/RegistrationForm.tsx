@@ -285,38 +285,38 @@ const RegistrationForm = () => {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header with Progress */}
       {currentStep > 0 && (
-        <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border px-4 py-4">
-          <div className="max-w-md mx-auto">
+        <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border px-4 md:px-6 py-4">
+          <div className="max-w-md md:max-w-lg lg:max-w-xl mx-auto">
             <FormProgress currentStep={currentStep} totalSteps={totalSteps - 1} />
           </div>
         </div>
       )}
 
       {/* Form Content */}
-      <div className="flex-1 px-4 py-6">
-        <div className="max-w-md mx-auto">
+      <div className="flex-1 px-4 md:px-6 py-6 md:py-8">
+        <div className="max-w-md md:max-w-lg lg:max-w-xl mx-auto">
           <div className="animate-fade-in-up">{renderStep()}</div>
         </div>
       </div>
 
       {/* Navigation Buttons */}
       {currentStep > 0 && currentStep < totalSteps - 1 && (
-        <div className="sticky bottom-0 bg-background/95 backdrop-blur-sm border-t border-border px-4 py-4">
-          <div className="max-w-md mx-auto flex gap-3">
+        <div className="sticky bottom-0 bg-background/95 backdrop-blur-sm border-t border-border px-4 md:px-6 py-4">
+          <div className="max-w-md md:max-w-lg lg:max-w-xl mx-auto flex gap-3 md:gap-4">
             <Button
               variant="outline"
               onClick={handleBack}
-              className="flex-1 h-12"
+              className="flex-1 h-12 md:h-14 md:text-base"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 mr-2" />
               Back
             </Button>
             <Button
               onClick={handleNext}
-              className="flex-1 h-12"
+              className="flex-1 h-12 md:h-14 md:text-base"
             >
               Next
-              <ArrowRight className="w-4 h-4 ml-2" />
+              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
             </Button>
           </div>
         </div>
@@ -324,15 +324,15 @@ const RegistrationForm = () => {
 
       {/* Back button only for review step */}
       {currentStep === totalSteps - 1 && (
-        <div className="sticky bottom-0 bg-background/95 backdrop-blur-sm border-t border-border px-4 py-4">
-          <div className="max-w-md mx-auto">
+        <div className="sticky bottom-0 bg-background/95 backdrop-blur-sm border-t border-border px-4 md:px-6 py-4">
+          <div className="max-w-md md:max-w-lg lg:max-w-xl mx-auto">
             <Button
               variant="outline"
               onClick={handleBack}
-              className="w-full h-12"
+              className="w-full h-12 md:h-14 md:text-base"
               disabled={isSubmitting}
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 mr-2" />
               Back to Edit
             </Button>
           </div>

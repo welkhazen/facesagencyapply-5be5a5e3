@@ -177,8 +177,8 @@ const MeasurementsStep = ({ data, gender, onChange }: MeasurementsStepProps) => 
         </div>
       </div>
 
-      <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+      <div className="space-y-4 md:space-y-5">
+        <div className="grid grid-cols-2 gap-4 md:gap-5">
           <div className="space-y-2">
             <Label htmlFor="height">Height (cm) *</Label>
             <Input
@@ -187,7 +187,7 @@ const MeasurementsStep = ({ data, gender, onChange }: MeasurementsStepProps) => 
               placeholder="170"
               value={data.height}
               onChange={(e) => onChange("height", e.target.value)}
-              className="h-12"
+              className="h-12 md:h-14"
             />
           </div>
           <div className="space-y-2">
@@ -198,17 +198,17 @@ const MeasurementsStep = ({ data, gender, onChange }: MeasurementsStepProps) => 
               placeholder="60"
               value={data.weight}
               onChange={(e) => onChange("weight", e.target.value)}
-              className="h-12"
+              className="h-12 md:h-14"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-3 md:gap-4">
           <div className="space-y-2">
-            <Label htmlFor="pantSize">Pant Size (US) *</Label>
+            <Label htmlFor="pantSize" className="text-xs md:text-sm">Pant Size (US) *</Label>
             <Select value={data.pantSize} onValueChange={(value) => onChange("pantSize", value)}>
-              <SelectTrigger className="h-12">
-                <SelectValue placeholder="Select size" />
+              <SelectTrigger className="h-12 md:h-14">
+                <SelectValue placeholder="Size" />
               </SelectTrigger>
               <SelectContent>
                 {usPantSizes.map((size) => (
@@ -218,10 +218,10 @@ const MeasurementsStep = ({ data, gender, onChange }: MeasurementsStepProps) => 
             </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="jacketSize">{gender === "male" ? "Jacket" : "Blouse"} (US) *</Label>
+            <Label htmlFor="jacketSize" className="text-xs md:text-sm">{gender === "male" ? "Jacket" : "Blouse"} (US) *</Label>
             <Select value={data.jacketSize} onValueChange={(value) => onChange("jacketSize", value)}>
-              <SelectTrigger className="h-12">
-                <SelectValue placeholder="Select size" />
+              <SelectTrigger className="h-12 md:h-14">
+                <SelectValue placeholder="Size" />
               </SelectTrigger>
               <SelectContent>
                 {usJacketSizes.map((size) => (
@@ -231,10 +231,10 @@ const MeasurementsStep = ({ data, gender, onChange }: MeasurementsStepProps) => 
             </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="shoeSize">Shoe Size (EU) *</Label>
+            <Label htmlFor="shoeSize" className="text-xs md:text-sm">Shoe Size (EU) *</Label>
             <Select value={data.shoeSize} onValueChange={(value) => onChange("shoeSize", value)}>
-              <SelectTrigger className="h-12">
-                <SelectValue placeholder="Select size" />
+              <SelectTrigger className="h-12 md:h-14">
+                <SelectValue placeholder="Size" />
               </SelectTrigger>
               <SelectContent>
                 {euShoeSizes.map((size) => (
@@ -245,7 +245,7 @@ const MeasurementsStep = ({ data, gender, onChange }: MeasurementsStepProps) => 
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
           <div className="space-y-2">
             <Label htmlFor="waist">Waist (cm)</Label>
             <Input
@@ -254,7 +254,7 @@ const MeasurementsStep = ({ data, gender, onChange }: MeasurementsStepProps) => 
               placeholder="70"
               value={data.waist}
               onChange={(e) => onChange("waist", e.target.value)}
-              className="h-12"
+              className="h-12 md:h-14"
             />
           </div>
           <div className="space-y-2">
@@ -265,12 +265,9 @@ const MeasurementsStep = ({ data, gender, onChange }: MeasurementsStepProps) => 
               placeholder="90"
               value={data.bust}
               onChange={(e) => onChange("bust", e.target.value)}
-              className="h-12"
+              className="h-12 md:h-14"
             />
           </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="hips">Hips (cm)</Label>
             <Input
@@ -279,7 +276,7 @@ const MeasurementsStep = ({ data, gender, onChange }: MeasurementsStepProps) => 
               placeholder="95"
               value={data.hips}
               onChange={(e) => onChange("hips", e.target.value)}
-              className="h-12"
+              className="h-12 md:h-14"
             />
           </div>
           <div className="space-y-2">
@@ -290,7 +287,7 @@ const MeasurementsStep = ({ data, gender, onChange }: MeasurementsStepProps) => 
               placeholder="45"
               value={data.shoulders}
               onChange={(e) => onChange("shoulders", e.target.value)}
-              className="h-12"
+              className="h-12 md:h-14"
             />
           </div>
         </div>
