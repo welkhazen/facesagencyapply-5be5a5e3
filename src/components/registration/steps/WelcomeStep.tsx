@@ -37,7 +37,7 @@ const WelcomeStep = ({
             <div className="logo-scroll-wrapper">
               <div className="logo-scroll-track">
                 <img alt="Partners" className="h-28 md:h-36 lg:h-44 object-contain px-8" src="/lovable-uploads/07543e1b-278c-4ebb-bb58-a8107bf32277.png" />
-                <img src={partnersFull} alt="Partners" className="h-28 md:h-36 lg:h-44 object-contain px-8" />
+                
               </div>
             </div>
           </div>
