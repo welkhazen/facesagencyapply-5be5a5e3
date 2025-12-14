@@ -31,9 +31,7 @@ const WelcomeStep = ({
 
           {/* Partner logos section - Our Customers */}
           <div className="w-full">
-            <p className="text-sm text-muted-foreground text-center mb-4">
-              Our Customers
-            </p>
+            <p className="text-muted-foreground text-center mb-4 text-base">Our Trusted Partners</p>
             <div className="logo-scroll-wrapper">
               <div className="logo-scroll-track">
                 <img alt="Partners" className="h-28 md:h-36 lg:h-44 object-contain px-8" src="/lovable-uploads/07543e1b-278c-4ebb-bb58-a8107bf32277.png" />
@@ -47,7 +45,7 @@ const WelcomeStep = ({
         <div className="flex-shrink-0 w-full max-w-lg mx-auto mb-8 md:mb-12">
           {phase === "ready-question" && <div className="animate-fade-in">
               <div className="bg-card border border-border rounded-2xl p-6 md:p-8 mb-8">
-                <p className="text-xl md:text-2xl lg:text-3xl font-medium text-secondary-foreground">Are you ready to join the community and team?</p>
+                <p className="text-xl md:text-2xl lg:text-3xl font-medium text-secondary-foreground">Are you ready to join our community and team?</p>
               </div>
               <div className="flex gap-6">
                 <button onClick={onProceed} className="flex-1 py-8 md:py-10 px-6 rounded-2xl border-2 border-border bg-card hover:border-primary hover:bg-primary/5 transition-all duration-200 group">
