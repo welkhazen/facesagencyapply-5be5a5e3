@@ -19,7 +19,7 @@ const WelcomeStep = ({
         </h1>
 
         {/* Tagline */}
-        <p className="text-lg md:text-xl text-muted-foreground mb-6 font-medium font-serif max-w-2xl">
+        <p className="text-lg md:text-xl text-muted-foreground mb-6 font-serif max-w-2xl font-semibold">
           Are you ready to have that chance to work, create, and perform, for the best and most favourable and recognizable brands internationally?
         </p>
 
