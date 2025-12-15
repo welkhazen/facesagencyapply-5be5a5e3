@@ -9,13 +9,6 @@ interface TalentsStepProps {
   data: {
     talents: string[];
     experience: string;
-    interestedInExtra: string;
-    hasCar: string;
-    hasLicense: string;
-    isEmployed: string;
-    canTravel: string;
-    hasPassport: string;
-    hasMultiplePassports: string;
     customTalent?: string;
   };
   onChange: (field: string, value: string | string[]) => void;
@@ -224,47 +217,6 @@ const TalentsStep = ({ data, onChange }: TalentsStepProps) => {
           No experience? No problem! We welcome fresh faces.
         </p>
 
-        <PollQuestion
-          label="If needed, would you be interested in casting as a Background Actor/Extra/Comparse?"
-          field="interestedInExtra"
-          value={data.interestedInExtra}
-        />
-
-        <PollQuestion
-          label="Do you own a car?"
-          field="hasCar"
-          value={data.hasCar}
-        />
-
-        <PollQuestion
-          label="Do you have a driving license?"
-          field="hasLicense"
-          value={data.hasLicense}
-        />
-
-        <PollQuestion
-          label="Are you employed?"
-          field="isEmployed"
-          value={data.isEmployed}
-        />
-
-        <PollQuestion
-          label="Are you willing to travel?"
-          field="canTravel"
-          value={data.canTravel}
-        />
-
-        <PollQuestion
-          label="Do you have a valid passport?"
-          field="hasPassport"
-          value={data.hasPassport}
-        />
-
-        <PollQuestion
-          label="Do you have more than one passport?"
-          field="hasMultiplePassports"
-          value={data.hasMultiplePassports}
-        />
       </div>
 
       {/* Click outside to close */}
