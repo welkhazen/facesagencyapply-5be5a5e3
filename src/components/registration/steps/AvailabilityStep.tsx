@@ -60,36 +60,14 @@ const AvailabilityStep = ({ data, onChange }: AvailabilityStepProps) => {
         </div>
       </div>
 
-      {/* Swimwear Poll Question */}
-      <div className="mt-8">
-        <Label className="block text-center text-lg font-medium mb-4">
-          Are you comfortable modeling swimwear?
-        </Label>
-        <div className="grid grid-cols-2 gap-4">
-          <button
-            type="button"
-            onClick={() => onChange("comfortableWithSwimwear", true)}
-            className={`p-4 rounded-lg border-2 transition-all duration-200 font-medium text-lg ${
-              data.comfortableWithSwimwear === true
-                ? "border-primary bg-primary/10 text-primary"
-                : "border-border hover:border-primary/50 text-foreground"
-            }`}
-          >
-            Yes
-          </button>
-          <button
-            type="button"
-            onClick={() => onChange("comfortableWithSwimwear", false)}
-            className={`p-4 rounded-lg border-2 transition-all duration-200 font-medium text-lg ${
-              data.comfortableWithSwimwear === false
-                ? "border-primary bg-primary/10 text-primary"
-                : "border-border hover:border-primary/50 text-foreground"
-            }`}
-          >
-            No
-          </button>
+        <div className="flex items-center justify-between p-4 rounded-lg border border-border">
+          <Label htmlFor="comfortableWithSwimwear" className="cursor-pointer">Are you comfortable modeling swimwear?</Label>
+          <Switch
+            id="comfortableWithSwimwear"
+            checked={data.comfortableWithSwimwear === true}
+            onCheckedChange={(checked) => onChange("comfortableWithSwimwear", checked)}
+          />
         </div>
-      </div>
     </div>
   );
 };
