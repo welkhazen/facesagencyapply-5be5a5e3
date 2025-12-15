@@ -61,6 +61,7 @@ interface FormData {
   hasLicense: boolean;
   hasPassport: boolean;
   canTravel: boolean;
+  comfortableWithSwimwear: boolean | null;
 }
 const initialFormData: FormData = {
   gender: "female",
@@ -108,7 +109,8 @@ const initialFormData: FormData = {
   hasCar: false,
   hasLicense: false,
   hasPassport: false,
-  canTravel: false
+  canTravel: false,
+  comfortableWithSwimwear: null
 };
 const RegistrationForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
