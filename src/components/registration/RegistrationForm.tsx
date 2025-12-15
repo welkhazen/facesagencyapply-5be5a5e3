@@ -57,10 +57,13 @@ interface FormData {
   talents: string[];
   customTalent: string;
   experience: string;
-  hasCar: boolean;
-  hasLicense: boolean;
-  hasPassport: boolean;
-  canTravel: boolean;
+  interestedInExtra: string;
+  hasCar: string;
+  hasLicense: string;
+  isEmployed: string;
+  canTravel: string;
+  hasPassport: string;
+  hasMultiplePassports: string;
   comfortableWithSwimwear: boolean | null;
 }
 const initialFormData: FormData = {
@@ -106,10 +109,13 @@ const initialFormData: FormData = {
   talents: [],
   customTalent: "",
   experience: "",
-  hasCar: false,
-  hasLicense: false,
-  hasPassport: false,
-  canTravel: false,
+  interestedInExtra: "",
+  hasCar: "",
+  hasLicense: "",
+  isEmployed: "",
+  canTravel: "",
+  hasPassport: "",
+  hasMultiplePassports: "",
   comfortableWithSwimwear: null
 };
 const RegistrationForm = () => {
