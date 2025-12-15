@@ -37,10 +37,13 @@ interface ReviewStepProps {
     hasPiercings: boolean;
     talents: string[];
     experience: string;
-    hasCar: boolean;
-    hasLicense: boolean;
-    hasPassport: boolean;
-    canTravel: boolean;
+    interestedInExtra: string;
+    hasCar: string;
+    hasLicense: string;
+    isEmployed: string;
+    canTravel: string;
+    hasPassport: string;
+    hasMultiplePassports: string;
     acceptTerms?: boolean;
     acceptAmbassador?: boolean;
   };
@@ -171,11 +174,15 @@ const ReviewStep = ({ formData, onSubmit, onChange, isSubmitting }: ReviewStepPr
           )}
         </Section>
 
-        <Section title="Availability">
-          <Field label="Has Car" value={formData.hasCar} />
-          <Field label="Driving License" value={formData.hasLicense} />
-          <Field label="Valid Passport" value={formData.hasPassport} />
-          <Field label="Can Travel" value={formData.canTravel} />
+        <Section title="Availability & Logistics">
+          <Field label="Experience" value={formData.experience === "yes" ? "Yes" : formData.experience === "no" ? "No" : "-"} />
+          <Field label="Interested in Extra Work" value={formData.interestedInExtra === "yes" ? "Yes" : formData.interestedInExtra === "no" ? "No" : "-"} />
+          <Field label="Has Car" value={formData.hasCar === "yes" ? "Yes" : formData.hasCar === "no" ? "No" : "-"} />
+          <Field label="Driving License" value={formData.hasLicense === "yes" ? "Yes" : formData.hasLicense === "no" ? "No" : "-"} />
+          <Field label="Employed" value={formData.isEmployed === "yes" ? "Yes" : formData.isEmployed === "no" ? "No" : "-"} />
+          <Field label="Willing to Travel" value={formData.canTravel === "yes" ? "Yes" : formData.canTravel === "no" ? "No" : "-"} />
+          <Field label="Valid Passport" value={formData.hasPassport === "yes" ? "Yes" : formData.hasPassport === "no" ? "No" : "-"} />
+          <Field label="Multiple Passports" value={formData.hasMultiplePassports === "yes" ? "Yes" : formData.hasMultiplePassports === "no" ? "No" : "-"} />
         </Section>
 
       </div>
