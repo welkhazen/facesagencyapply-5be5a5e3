@@ -32,6 +32,7 @@ interface ReviewStepProps {
     hasTattoos: boolean;
     hasPiercings: boolean;
     talents: string[];
+    sports: string[];
     experience: string;
     interestedInExtra: string;
     hasCar: string;
@@ -146,6 +147,7 @@ const ReviewStep = ({ formData, onSubmit, onChange, isSubmitting }: ReviewStepPr
 
         <Section title="Talents & Experience">
           <Field label="Talents" value={formData.talents?.join(", ") || "-"} />
+          <Field label="Sports" value={formData.sports?.join(", ") || "-"} />
           {formData.experience && (
             <div className="text-sm">
               <span className="text-muted-foreground">Experience:</span>
