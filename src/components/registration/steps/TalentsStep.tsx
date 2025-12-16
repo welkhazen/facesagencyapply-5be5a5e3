@@ -1,15 +1,17 @@
 import { useState, useMemo } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { talents } from "@/data/lebanese-locations";
+import { talents, sports } from "@/data/lebanese-locations";
 import { Check, ChevronDown, X, Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface TalentsStepProps {
   data: {
     talents: string[];
+    sports: string[];
     experience: string;
     customTalent?: string;
+    customSport?: string;
     comfortableWithSwimwear: boolean | null;
   };
   onChange: (field: string, value: string | string[] | boolean) => void;
@@ -17,17 +19,28 @@ interface TalentsStepProps {
 
 const TalentsStep = ({ data, onChange }: TalentsStepProps) => {
   const [customTalent, setCustomTalent] = useState(data.customTalent || "");
-  const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [customSport, setCustomSport] = useState(data.customSport || "");
+  const [isTalentsOpen, setIsTalentsOpen] = useState(false);
+  const [isSportsOpen, setIsSportsOpen] = useState(false);
+  const [talentSearchQuery, setTalentSearchQuery] = useState("");
+  const [sportSearchQuery, setSportSearchQuery] = useState("");
 
   const filteredTalents = useMemo(() => {
-    if (!searchQuery.trim()) return talents;
+    if (!talentSearchQuery.trim()) return talents;
     return talents.filter((talent) =>
-      talent.toLowerCase().includes(searchQuery.toLowerCase())
+      talent.toLowerCase().includes(talentSearchQuery.toLowerCase())
     );
-  }, [searchQuery]);
+  }, [talentSearchQuery]);
+
+  const filteredSports = useMemo(() => {
+    if (!sportSearchQuery.trim()) return sports;
+    return sports.filter((sport) =>
+      sport.toLowerCase().includes(sportSearchQuery.toLowerCase())
+    );
+  }, [sportSearchQuery]);
 
   const maxTalents = 8;
+  const maxSports = 5;
 
   const handleTalentToggle = (talent: string) => {
     const currentTalents = data.talents || [];
@@ -35,6 +48,15 @@ const TalentsStep = ({ data, onChange }: TalentsStepProps) => {
       onChange("talents", currentTalents.filter((t) => t !== talent));
     } else if (currentTalents.length < maxTalents) {
       onChange("talents", [...currentTalents, talent]);
+    }
+  };
+
+  const handleSportToggle = (sport: string) => {
+    const currentSports = data.sports || [];
+    if (currentSports.includes(sport)) {
+      onChange("sports", currentSports.filter((s) => s !== sport));
+    } else if (currentSports.length < maxSports) {
+      onChange("sports", [...currentSports, sport]);
     }
   };
 
@@ -47,13 +69,29 @@ const TalentsStep = ({ data, onChange }: TalentsStepProps) => {
     }
   };
 
+  const handleRemoveSport = (sport: string) => {
+    const currentSports = data.sports || [];
+    onChange("sports", currentSports.filter((s) => s !== sport));
+    if (sport === "Other") {
+      setCustomSport("");
+      onChange("customSport", "");
+    }
+  };
+
   const handleCustomTalentChange = (value: string) => {
     setCustomTalent(value);
     onChange("customTalent", value);
   };
 
+  const handleCustomSportChange = (value: string) => {
+    setCustomSport(value);
+    onChange("customSport", value);
+  };
+
   const selectedTalents = data.talents || [];
-  const hasOtherSelected = selectedTalents.includes("Other");
+  const selectedSports = data.sports || [];
+  const hasTalentOtherSelected = selectedTalents.includes("Other");
+  const hasSportOtherSelected = selectedSports.includes("Other");
 
   const PollQuestion = ({
     label,
@@ -109,10 +147,10 @@ const TalentsStep = ({ data, onChange }: TalentsStepProps) => {
       </div>
 
       <div className="space-y-6">
+        {/* Talents dropdown */}
         <div className="space-y-2">
-          <Label>Talents & Skills *</Label>
+          <Label>Talents & Skills</Label>
           
-          {/* Selected talents badges */}
           {selectedTalents.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-3">
               {selectedTalents.map((talent) => (
@@ -134,11 +172,13 @@ const TalentsStep = ({ data, onChange }: TalentsStepProps) => {
             </div>
           )}
 
-          {/* Searchable dropdown */}
           <div className="relative">
             <button
               type="button"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => {
+                setIsTalentsOpen(!isTalentsOpen);
+                setIsSportsOpen(false);
+              }}
               className="w-full flex items-center justify-between p-4 rounded-lg border border-border bg-background hover:border-primary/50 transition-colors text-left"
             >
               <span className="text-muted-foreground">
@@ -146,26 +186,24 @@ const TalentsStep = ({ data, onChange }: TalentsStepProps) => {
                   ? "Select your talents (max 8)..."
                   : `${selectedTalents.length}/${maxTalents} talents selected`}
               </span>
-              <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`} />
+              <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform ${isTalentsOpen ? "rotate-180" : ""}`} />
             </button>
 
-            {isOpen && (
+            {isTalentsOpen && (
               <div className="absolute z-50 w-full mt-2 bg-background border border-border rounded-lg shadow-lg overflow-hidden">
-                {/* Search input */}
                 <div className="p-3 border-b border-border">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       placeholder="Search talents..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      value={talentSearchQuery}
+                      onChange={(e) => setTalentSearchQuery(e.target.value)}
                       className="pl-9"
                       autoFocus
                     />
                   </div>
                 </div>
 
-                {/* Talents list */}
                 <div className="max-h-64 overflow-y-auto">
                   {filteredTalents.length === 0 ? (
                     <div className="p-4 text-center text-muted-foreground">
@@ -198,12 +236,110 @@ const TalentsStep = ({ data, onChange }: TalentsStepProps) => {
             )}
           </div>
 
-          {/* Custom talent input when "Other" is selected */}
-          {hasOtherSelected && (
+          {hasTalentOtherSelected && (
             <Input
               placeholder="Specify your other talent..."
               value={customTalent}
               onChange={(e) => handleCustomTalentChange(e.target.value)}
+              className="mt-3"
+            />
+          )}
+        </div>
+
+        {/* Sports dropdown */}
+        <div className="space-y-2">
+          <Label>Sports & Fitness</Label>
+          
+          {selectedSports.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-3">
+              {selectedSports.map((sport) => (
+                <Badge
+                  key={sport}
+                  variant="secondary"
+                  className="flex items-center gap-1 px-3 py-1.5 text-sm bg-primary/10 text-primary border border-primary/20"
+                >
+                  {sport}
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveSport(sport)}
+                    className="ml-1 hover:bg-primary/20 rounded-full p-0.5"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))}
+            </div>
+          )}
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => {
+                setIsSportsOpen(!isSportsOpen);
+                setIsTalentsOpen(false);
+              }}
+              className="w-full flex items-center justify-between p-4 rounded-lg border border-border bg-background hover:border-primary/50 transition-colors text-left"
+            >
+              <span className="text-muted-foreground">
+                {selectedSports.length === 0
+                  ? "Select your sports (max 5)..."
+                  : `${selectedSports.length}/${maxSports} sports selected`}
+              </span>
+              <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform ${isSportsOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {isSportsOpen && (
+              <div className="absolute z-50 w-full mt-2 bg-background border border-border rounded-lg shadow-lg overflow-hidden">
+                <div className="p-3 border-b border-border">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search sports..."
+                      value={sportSearchQuery}
+                      onChange={(e) => setSportSearchQuery(e.target.value)}
+                      className="pl-9"
+                      autoFocus
+                    />
+                  </div>
+                </div>
+
+                <div className="max-h-64 overflow-y-auto">
+                  {filteredSports.length === 0 ? (
+                    <div className="p-4 text-center text-muted-foreground">
+                      No sports found
+                    </div>
+                  ) : (
+                    filteredSports.map((sport) => {
+                      const isSelected = selectedSports.includes(sport);
+                      const isDisabled = !isSelected && selectedSports.length >= maxSports;
+                      return (
+                        <button
+                          key={sport}
+                          type="button"
+                          onClick={() => !isDisabled && handleSportToggle(sport)}
+                          disabled={isDisabled}
+                          className={`w-full flex items-center justify-between px-4 py-3 transition-colors text-left ${
+                            isSelected ? "bg-primary/5 hover:bg-primary/10" : ""
+                          } ${isDisabled ? "opacity-50 cursor-not-allowed" : "hover:bg-muted/50"}`}
+                        >
+                          <span className={isSelected ? "text-primary font-medium" : "text-foreground"}>
+                            {sport}
+                          </span>
+                          {isSelected && <Check className="h-4 w-4 text-primary" />}
+                        </button>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {hasSportOtherSelected && (
+            <Input
+              placeholder="Specify your other sport..."
+              value={customSport}
+              onChange={(e) => handleCustomSportChange(e.target.value)}
               className="mt-3"
             />
           )}
@@ -256,10 +392,13 @@ const TalentsStep = ({ data, onChange }: TalentsStepProps) => {
       </div>
 
       {/* Click outside to close */}
-      {isOpen && (
+      {(isTalentsOpen || isSportsOpen) && (
         <div
           className="fixed inset-0 z-40"
-          onClick={() => setIsOpen(false)}
+          onClick={() => {
+            setIsTalentsOpen(false);
+            setIsSportsOpen(false);
+          }}
         />
       )}
     </div>

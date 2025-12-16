@@ -53,7 +53,9 @@ interface FormData {
   customHairColor: string;
   shoulders: string;
   talents: string[];
+  sports: string[];
   customTalent: string;
+  customSport: string;
   experience: string;
   interestedInExtra: string;
   hasCar: string;
@@ -104,7 +106,9 @@ const initialFormData: FormData = {
   customHairColor: "",
   shoulders: "",
   talents: [],
+  sports: [],
   customTalent: "",
+  customSport: "",
   experience: "",
   interestedInExtra: "",
   hasCar: "",

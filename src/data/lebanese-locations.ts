@@ -524,24 +524,6 @@ export const talents = [
   "Podcast Hosting",
   "Live Streaming",
   
-  // Sports & Fitness
-  "Yoga",
-  "Pilates",
-  "CrossFit",
-  "Bodybuilding",
-  "Swimming",
-  "Gymnastics",
-  "Martial Arts",
-  "Boxing",
-  "Football/Soccer",
-  "Basketball",
-  "Tennis",
-  "Running/Athletics",
-  "Cycling",
-  "Surfing",
-  "Skiing/Snowboarding",
-  "Rock Climbing",
-  
   // Creative & Artistic
   "Photography",
   "Videography",
@@ -574,12 +556,32 @@ export const talents = [
   "Cooking/Culinary Arts",
   "Bartending/Mixology",
   "Wine Sommelier",
-  "Horseback Riding",
   "Driving (Stunt/Precision)",
   "Motorcycling",
+  
+  "Other",
+];
+
+export const sports = [
+  "Yoga",
+  "Pilates",
+  "CrossFit",
+  "Bodybuilding",
+  "Swimming",
+  "Gymnastics",
+  "Martial Arts",
+  "Boxing",
+  "Football/Soccer",
+  "Basketball",
+  "Tennis",
+  "Running/Athletics",
+  "Cycling",
+  "Surfing",
+  "Skiing/Snowboarding",
+  "Rock Climbing",
+  "Horseback Riding",
   "Skating (Ice/Roller)",
   "Skateboarding",
-  
   "Other",
 ];
 
