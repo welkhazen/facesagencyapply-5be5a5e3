@@ -2,6 +2,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { countryCodes } from "@/data/lebanese-locations";
+
+const otherNumberRelationships = [
+  "Mother",
+  "Father",
+  "Brother",
+  "Sister",
+  "Uncle",
+  "Aunt",
+  "Cousin",
+  "Grandfather",
+  "Grandmother",
+  "Spouse",
+  "Friend",
+  "Colleague",
+  "Other"
+];
+
 interface ContactStepProps {
   data: {
     mobile: string;
@@ -10,6 +27,8 @@ interface ContactStepProps {
     whatsappCountryCode: string;
     otherNumber: string;
     otherNumberCountryCode: string;
+    otherNumberRelationship: string;
+    otherNumberPersonName: string;
     instagram: string;
   };
   onChange: (field: string, value: string) => void;
@@ -78,6 +97,33 @@ const ContactStep = ({
             </Select>
             <Input id="otherNumber" placeholder="XX XXX XXX" value={data.otherNumber} onChange={e => onChange("otherNumber", e.target.value)} className="h-12 md:h-14 flex-1" type="tel" />
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="otherNumberRelationship">Who is this number for? *</Label>
+          <Select value={data.otherNumberRelationship} onValueChange={value => onChange("otherNumberRelationship", value)}>
+            <SelectTrigger className="h-12 md:h-14">
+              <SelectValue placeholder="Select relationship" />
+            </SelectTrigger>
+            <SelectContent>
+              {otherNumberRelationships.map(rel => (
+                <SelectItem key={rel} value={rel.toLowerCase()}>
+                  {rel}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="otherNumberPersonName">Name of person *</Label>
+          <Input 
+            id="otherNumberPersonName" 
+            placeholder="Enter name" 
+            value={data.otherNumberPersonName} 
+            onChange={e => onChange("otherNumberPersonName", e.target.value)} 
+            className="h-12 md:h-14" 
+          />
         </div>
       </div>
 

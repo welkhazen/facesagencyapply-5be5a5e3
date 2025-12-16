@@ -27,6 +27,8 @@ interface FormData {
   whatsappCountryCode: string;
   otherNumber: string;
   otherNumberCountryCode: string;
+  otherNumberRelationship: string;
+  otherNumberPersonName: string;
   instagram: string;
   governorate: string;
   district: string;
@@ -80,6 +82,8 @@ const initialFormData: FormData = {
   whatsappCountryCode: "+961",
   otherNumber: "",
   otherNumberCountryCode: "+961",
+  otherNumberRelationship: "",
+  otherNumberPersonName: "",
   instagram: "",
   governorate: "",
   district: "",
