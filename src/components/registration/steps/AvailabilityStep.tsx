@@ -1,4 +1,7 @@
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { X } from "lucide-react";
+import { nationalities } from "@/data/lebanese-locations";
 
 interface AvailabilityStepProps {
   data: {
@@ -9,9 +12,10 @@ interface AvailabilityStepProps {
     canTravel: string;
     hasPassport: string;
     hasMultiplePassports: string;
+    passports: string[];
     comfortableWithSwimwear: boolean | null;
   };
-  onChange: (field: string, value: string | boolean) => void;
+  onChange: (field: string, value: string | boolean | string[]) => void;
 }
 
 const AvailabilityStep = ({ data, onChange }: AvailabilityStepProps) => {
@@ -110,6 +114,61 @@ const AvailabilityStep = ({ data, onChange }: AvailabilityStepProps) => {
           field="hasMultiplePassports"
           value={data.hasMultiplePassports}
         />
+
+        {data.hasMultiplePassports === "yes" && (
+          <div className="space-y-3">
+            <Label>Select your passports (up to 3)</Label>
+            {data.passports.length < 3 && (
+              <Select
+                value=""
+                onValueChange={(value) => {
+                  if (!data.passports.includes(value) && data.passports.length < 3) {
+                    onChange("passports", [...data.passports, value]);
+                  }
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Add a passport" />
+                </SelectTrigger>
+                <SelectContent>
+                  {nationalities.map((nationality) => (
+                    <SelectItem
+                      key={nationality}
+                      value={nationality}
+                      disabled={data.passports.includes(nationality)}
+                    >
+                      {nationality}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+            {data.passports.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-2">
+                {data.passports.map((passport) => (
+                  <div
+                    key={passport}
+                    className="flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-lg px-3 py-2"
+                  >
+                    <span className="text-sm font-medium">{passport}</span>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        onChange(
+                          "passports",
+                          data.passports.filter((p) => p !== passport)
+                        )
+                      }
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="space-y-3">
           <Label>Are you comfortable modeling swimwear?</Label>

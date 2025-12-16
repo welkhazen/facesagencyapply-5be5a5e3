@@ -42,6 +42,7 @@ interface ReviewStepProps {
     canTravel: string;
     hasPassport: string;
     hasMultiplePassports: string;
+    passports?: string[];
     acceptAmbassador?: boolean;
   };
   onSubmit: () => void;
@@ -166,6 +167,9 @@ const ReviewStep = ({ formData, onSubmit, onChange, isSubmitting }: ReviewStepPr
           <Field label="Willing to Travel" value={formData.canTravel === "yes" ? "Yes" : formData.canTravel === "no" ? "No" : "-"} />
           <Field label="Valid Passport" value={formData.hasPassport === "yes" ? "Yes" : formData.hasPassport === "no" ? "No" : "-"} />
           <Field label="Multiple Passports" value={formData.hasMultiplePassports === "yes" ? "Yes" : formData.hasMultiplePassports === "no" ? "No" : "-"} />
+          {formData.hasMultiplePassports === "yes" && formData.passports && formData.passports.length > 0 && (
+            <Field label="Passports" value={formData.passports.join(", ")} />
+          )}
         </Section>
 
       </div>

@@ -64,6 +64,7 @@ interface FormData {
   canTravel: string;
   hasPassport: string;
   hasMultiplePassports: string;
+  passports: string[];
   comfortableWithSwimwear: boolean | null;
 }
 const initialFormData: FormData = {
@@ -116,6 +117,7 @@ const initialFormData: FormData = {
   canTravel: "",
   hasPassport: "",
   hasMultiplePassports: "",
+  passports: [],
   comfortableWithSwimwear: null
 };
 const RegistrationForm = () => {
