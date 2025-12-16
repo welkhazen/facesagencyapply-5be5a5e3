@@ -58,10 +58,10 @@ const LogoAnimation = ({ onComplete }: LogoAnimationProps) => {
       setLogoFading(true);
     }, lettersDuration + 200);
 
-    // Play sound 400ms before flash starts
+    // Play sound 250ms before flash starts
     const soundTimeout = setTimeout(() => {
       playCameraSound();
-    }, lettersDuration + 200);
+    }, lettersDuration + 350);
 
     // After logo fades, start flash
     const flashStartTimeout = setTimeout(() => {
