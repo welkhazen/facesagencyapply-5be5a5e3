@@ -275,7 +275,6 @@ export const nationalities = [
   "Iranian",
   "Iraqi",
   "Irish",
-  "Israeli",
   "Italian",
   "Ivorian",
   "Jamaican",
