@@ -347,7 +347,7 @@ const TalentsStep = ({ data, onChange }: TalentsStepProps) => {
         </div>
 
         <PollQuestion
-          label="Do you have previous modeling or acting experience?"
+          label="Do you have previous acting and modeling experience?"
           field="experience"
           value={data.experience}
         />
