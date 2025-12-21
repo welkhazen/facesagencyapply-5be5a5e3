@@ -29,6 +29,9 @@ interface FormData {
   otherNumberRelationship: string;
   otherNumberPersonName: string;
   instagram: string;
+  hasWhishAccount: string;
+  whishNumber: string;
+  whishCountryCode: string;
   governorate: string;
   district: string;
   area: string;
@@ -86,6 +89,9 @@ const initialFormData: FormData = {
   otherNumberRelationship: "",
   otherNumberPersonName: "",
   instagram: "",
+  hasWhishAccount: "",
+  whishNumber: "",
+  whishCountryCode: "+961",
   governorate: "",
   district: "",
   area: "",

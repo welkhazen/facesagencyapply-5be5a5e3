@@ -30,6 +30,9 @@ interface ContactStepProps {
     otherNumberRelationship: string;
     otherNumberPersonName: string;
     instagram: string;
+    hasWhishAccount: string;
+    whishNumber: string;
+    whishCountryCode: string;
   };
   onChange: (field: string, value: string) => void;
   className?: string;
@@ -144,7 +147,50 @@ const ContactStep = ({
               <Input id="instagram" placeholder="username" value={data.instagram} onChange={e => onChange("instagram", e.target.value)} className="h-12 md:h-14 pl-8" />
             </div>
           </div>
+        </div>
+      </div>
 
+      {/* Payment Method Section */}
+      <div className="pt-6 border-t border-border">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2 font-sans text-center">
+            Payment Method
+          </h2>
+          <p className="text-muted-foreground">How would you like to receive payments?</p>
+        </div>
+        
+        <div className="space-y-4 md:space-y-5">
+          <div className="space-y-2">
+            <Label>Do you have a Whish account?</Label>
+            <Select value={data.hasWhishAccount || ""} onValueChange={value => onChange("hasWhishAccount", value)}>
+              <SelectTrigger className="h-12 md:h-14">
+                <SelectValue placeholder="Select an option" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="yes">Yes</SelectItem>
+                <SelectItem value="no">No</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {data.hasWhishAccount === "yes" && (
+            <div className="space-y-2">
+              <Label htmlFor="whishNumber">Whish Number *</Label>
+              <div className="flex gap-2 md:gap-3">
+                <Select value={data.whishCountryCode || "+961"} onValueChange={value => onChange("whishCountryCode", value)}>
+                  <SelectTrigger className="w-28 md:w-32 h-12 md:h-14">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {countryCodes.map(code => <SelectItem key={code.code} value={code.code}>
+                        {code.code}
+                      </SelectItem>)}
+                  </SelectContent>
+                </Select>
+                <Input id="whishNumber" placeholder="XX XXX XXX" value={data.whishNumber || ""} onChange={e => onChange("whishNumber", e.target.value)} className="h-12 md:h-14 flex-1" type="tel" />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>;

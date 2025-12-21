@@ -12,7 +12,7 @@ const mainLanguages = ["Arabic", "English", "French"];
 const otherLanguages = [
   "Afrikaans", "Albanian", "Amharic", "Armenian", "Bengali", "Bulgarian", "Cantonese",
   "Catalan", "Croatian", "Czech", "Danish", "Dutch", "Estonian", "Farsi",
-  "Finnish", "German", "Greek", "Gujarati", "Hebrew", "Hindi", "Hungarian", "Icelandic",
+  "Finnish", "German", "Greek", "Gujarati", "Hindi", "Hungarian", "Icelandic",
   "Indonesian", "Italian", "Japanese", "Javanese", "Kannada", "Kazakh", "Korean", "Kurdish",
   "Latin", "Latvian", "Lithuanian", "Malay", "Malayalam", "Mandarin", "Marathi",
   "Nepali", "Norwegian", "Pashto", "Polish", "Portuguese", "Punjabi", "Romanian", "Russian", "Serbian",
