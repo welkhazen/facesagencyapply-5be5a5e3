@@ -86,7 +86,7 @@ const ContactStep = ({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="otherNumber">Other Number *</Label>
+          <Label htmlFor="otherNumber">Emergency Contact *</Label>
           <div className="flex gap-2 md:gap-3">
             <Select value={data.otherNumberCountryCode || "+961"} onValueChange={value => onChange("otherNumberCountryCode", value)}>
               <SelectTrigger className="w-28 md:w-32 h-12 md:h-14">
@@ -103,7 +103,7 @@ const ContactStep = ({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="otherNumberRelationship">Who is this number for? *</Label>
+          <Label htmlFor="otherNumberRelationship">Who is this contact? *</Label>
           <Select value={data.otherNumberRelationship} onValueChange={value => onChange("otherNumberRelationship", value)}>
             <SelectTrigger className="h-12 md:h-14">
               <SelectValue placeholder="Select relationship" />
@@ -119,7 +119,7 @@ const ContactStep = ({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="otherNumberPersonName">Name of person *</Label>
+          <Label htmlFor="otherNumberPersonName">Contact name *</Label>
           <Input 
             id="otherNumberPersonName" 
             placeholder="Enter name" 
