@@ -160,33 +160,52 @@ const ContactStep = ({
         </div>
         
         <div className="space-y-4 md:space-y-5">
-          <div className="space-y-2">
-            <Label>Do you have a Whish account?</Label>
-            <Select value={data.hasWhishAccount || ""} onValueChange={value => onChange("hasWhishAccount", value)}>
-              <SelectTrigger className="h-12 md:h-14">
-                <SelectValue placeholder="Select an option" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="yes">Yes</SelectItem>
-                <SelectItem value="no">No</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="space-y-3">
+            <Label>Do you have a current active Whish account?</Label>
+            <div className="grid grid-cols-2 gap-4">
+              <div
+                onClick={() => onChange("hasWhishAccount", "yes")}
+                className={`flex items-center justify-center p-5 rounded-xl border-2 cursor-pointer transition-all ${
+                  data.hasWhishAccount === "yes"
+                    ? "border-primary bg-primary/10 shadow-md"
+                    : "border-border hover:border-primary/50 hover:bg-muted/50"
+                }`}
+              >
+                <span className={`text-lg font-semibold ${
+                  data.hasWhishAccount === "yes" ? "text-primary" : "text-foreground"
+                }`}>
+                  Yes
+                </span>
+              </div>
+              <div
+                onClick={() => onChange("hasWhishAccount", "no")}
+                className={`flex items-center justify-center p-5 rounded-xl border-2 cursor-pointer transition-all ${
+                  data.hasWhishAccount === "no"
+                    ? "border-primary bg-primary/10 shadow-md"
+                    : "border-border hover:border-primary/50 hover:bg-muted/50"
+                }`}
+              >
+                <span className={`text-lg font-semibold ${
+                  data.hasWhishAccount === "no" ? "text-primary" : "text-foreground"
+                }`}>
+                  No
+                </span>
+              </div>
+            </div>
           </div>
 
           {data.hasWhishAccount === "yes" && (
             <div className="space-y-2">
               <Label htmlFor="whishNumber">Whish Number *</Label>
               <div className="flex gap-2 md:gap-3">
-                <Select value={data.whishCountryCode || "+961"} onValueChange={value => onChange("whishCountryCode", value)}>
-                  <SelectTrigger className="w-28 md:w-32 h-12 md:h-14">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {countryCodes.map(code => <SelectItem key={code.code} value={code.code}>
-                        {code.code}
-                      </SelectItem>)}
-                  </SelectContent>
-                </Select>
+                <Input 
+                  id="whishCountryCode" 
+                  placeholder="+961" 
+                  value={data.whishCountryCode || "+961"} 
+                  onChange={e => onChange("whishCountryCode", e.target.value)} 
+                  className="w-24 md:w-28 h-12 md:h-14 text-center" 
+                  type="tel" 
+                />
                 <Input id="whishNumber" placeholder="XX XXX XXX" value={data.whishNumber || ""} onChange={e => onChange("whishNumber", e.target.value)} className="h-12 md:h-14 flex-1" type="tel" />
               </div>
             </div>
