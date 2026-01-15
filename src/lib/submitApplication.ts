@@ -7,6 +7,7 @@ interface FormData {
   lastName: string;
   dateOfBirth: string;
   nationality: string;
+  email: string;
   mobile: string;
   mobileCountryCode: string;
   whatsapp: string;
@@ -71,7 +72,6 @@ export async function submitApplication(formData: FormData): Promise<{ success: 
       last_name: formData.lastName,
       date_of_birth: formData.dateOfBirth,
       nationality: formData.nationality,
-      email: formData.email,
       mobile: `${formData.mobileCountryCode} ${formData.mobile}`,
       whatsapp: `${formData.whatsappCountryCode} ${formData.whatsapp}`,
       other_number: formData.otherNumber ? `${formData.otherNumberCountryCode} ${formData.otherNumber}` : null,
