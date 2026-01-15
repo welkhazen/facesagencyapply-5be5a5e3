@@ -5,71 +5,74 @@ interface FormData {
   firstName: string;
   middleName: string;
   lastName: string;
+  email: string; // IMPORTANT
   dateOfBirth: string;
   nationality: string;
+
   mobile: string;
   mobileCountryCode: string;
   whatsapp: string;
   whatsappCountryCode: string;
+
   otherNumber: string;
   otherNumberCountryCode: string;
-  otherNumberRelationship: string;
-  otherNumberPersonName: string;
+
   instagram: string;
-  hasWhishAccount: string;
-  whishNumber: string;
-  whishCountryCode: string;
+
   governorate: string;
   district: string;
   area: string;
+
   languages: string[];
   languageLevels: Record<string, number>;
-  customLanguage: string;
+
   height: string;
   weight: string;
+
   pantSize: string;
   jacketSize: string;
   shoeSize: string;
+
   bust: string;
   waist: string;
   hips: string;
+  shoulders: string;
+
   eyeColor: string;
   hairColor: string;
   hairType: string;
   hairLength: string;
   skinTone: string;
-  hasTattoos: boolean;
-  hasPiercings: boolean;
+
   customEyeColor: string;
   customHairColor: string;
-  shoulders: string;
+
   talents: string[];
   talentLevels: Record<string, number>;
+
   sports: string[];
   sportLevels: Record<string, number>;
-  modeling: string[];
-  customTalent: string;
-  customSport: string;
-  customModeling: string;
+
   experience: string;
-  interestedInExtra: string;
-  hasCar: string;
-  hasLicense: string;
-  isEmployed: string;
-  canTravel: string;
+
   hasPassport: string;
-  hasMultiplePassports: string;
-  passports: string[];
+  canTravel: string;
+  hasCar: string;
+
   comfortableWithSwimwear: boolean | null;
 }
 
-export async function submitApplication(formData: FormData): Promise<{ success: boolean; error?: string }> {
+export async function submitApplication(
+  formData: FormData
+): Promise<{ success: boolean; error?: string }> {
   try {
+    // DEBUG: minimal insert to force a real error or a success
     const { data, error } = await supabase
       .from("applications")
       .insert({
         first_name: formData.firstName,
         last_name: formData.lastName,
+        email: formData.email,
       })
       .select("id, created_at")
       .single();
@@ -88,6 +91,7 @@ export async function submitApplication(formData: FormData): Promise<{ success: 
     return { success: false, error: "An unexpected error occurred" };
   }
 }
+
 
     if (error) {
       console.error("Error submitting application:", error);
