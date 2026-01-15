@@ -7,7 +7,6 @@ interface FormData {
   lastName: string;
   dateOfBirth: string;
   nationality: string;
-  email: string;
   mobile: string;
   mobileCountryCode: string;
   whatsapp: string;
@@ -66,48 +65,29 @@ interface FormData {
 
 export async function submitApplication(formData: FormData): Promise<{ success: boolean; error?: string }> {
   try {
-    const { error } = await supabase.from("applications").insert({
-      first_name: formData.firstName,
-      middle_name: formData.middleName,
-      last_name: formData.lastName,
-      date_of_birth: formData.dateOfBirth,
-      nationality: formData.nationality,
-      mobile: `${formData.mobileCountryCode} ${formData.mobile}`,
-      whatsapp: `${formData.whatsappCountryCode} ${formData.whatsapp}`,
-      other_number: formData.otherNumber ? `${formData.otherNumberCountryCode} ${formData.otherNumber}` : null,
-      instagram: formData.instagram || null,
-      tiktok: null,
-      website: null,
-      governorate: formData.governorate,
-      district: formData.district,
-      area: formData.area,
-      languages: formData.languages,
-      language_levels: formData.languageLevels,
-      eye_color: formData.customEyeColor || formData.eyeColor,
-      hair_color: formData.customHairColor || formData.hairColor,
-      hair_type: formData.hairType,
-      hair_length: formData.hairLength,
-      skin_tone: formData.skinTone,
-      height: formData.height,
-      weight: formData.weight,
-      pant_size: formData.pantSize,
-      jacket_size: formData.jacketSize,
-      shoe_size: formData.shoeSize,
-      waist: formData.waist || null,
-      bust: formData.bust || null,
-      hips: formData.hips || null,
-      shoulders: formData.shoulders || null,
-      talents: formData.talents,
-      talent_levels: formData.talentLevels,
-      sports: formData.sports,
-      sport_levels: formData.sportLevels,
-      experience: formData.experience || null,
-      has_passport: formData.hasPassport === "yes",
-      willing_to_travel: formData.canTravel === "yes",
-      car_availability: formData.hasCar,
-      is_brand_ambassador: false,
-      photo_urls: [],
-    });
+    const { data, error } = await supabase
+      .from("applications")
+      .insert({
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+      })
+      .select("id, created_at")
+      .single();
+
+    if (error) {
+      alert("SUPABASE INSERT FAILED: " + error.message);
+      console.error("Error submitting application:", error);
+      return { success: false, error: error.message };
+    }
+
+    alert("Inserted! ID: " + data.id);
+    return { success: true };
+  } catch (err: any) {
+    alert("UNEXPECTED ERROR: " + (err?.message || String(err)));
+    console.error("Unexpected error:", err);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
 
     if (error) {
       console.error("Error submitting application:", error);
