@@ -115,20 +115,34 @@ export async function submitApplication(formData: FormData): Promise<{ success: 
       return { success: false, error: error.message };
     }
 
+    // Call HubSpot Edge Function
+    try {
+      const { error: hsErr, data: hsData } = await supabase.functions.invoke("hubspot-upsert-contact", {
+        body: {
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          mobile: formData.mobile ? `${formData.mobileCountryCode ?? ""} ${formData.mobile}`.trim() : null,
+          whatsapp: formData.whatsapp ? `${formData.whatsappCountryCode ?? ""} ${formData.whatsapp}`.trim() : null,
+          instagram: formData.instagram ?? null,
+          governorate: formData.governorate ?? null,
+          district: formData.district ?? null,
+          area: formData.area ?? null,
+        },
+      });
+
+      if (hsErr) {
+        console.error("HubSpot sync failed:", hsErr);
+      } else {
+        console.log("HubSpot sync ok:", hsData);
+      }
+    } catch (hsInvokeErr) {
+      console.error("Error invoking HubSpot function:", hsInvokeErr);
+    }
+
     return { success: true };
   } catch (err) {
     console.error("Unexpected error:", err);
     return { success: false, error: "An unexpected error occurred" };
   }
 }
-await sendToZapierDirect({
-  email: formData.email,
-  firstName: formData.firstName,
-  lastName: formData.lastName,
-  mobile: formData.mobile ? `${formData.mobileCountryCode ?? ""} ${formData.mobile}`.trim() : null,
-  whatsapp: formData.whatsapp ? `${formData.whatsappCountryCode ?? ""} ${formData.whatsapp}`.trim() : null,
-  governorate: formData.governorate ?? null,
-  district: formData.district ?? null,
-  area: formData.area ?? null,
-  submittedAt: new Date().toISOString(),
-});
