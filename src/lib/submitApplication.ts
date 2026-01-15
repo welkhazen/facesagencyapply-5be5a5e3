@@ -27,7 +27,9 @@ interface FormData {
   languageLevels: Record<string, number>;
   customLanguage: string;
   height: string;
+  heightUnit?: string;
   weight: string;
+  weightUnit?: string;
   pantSize: string;
   jacketSize: string;
   shoeSize: string;
@@ -77,12 +79,10 @@ export async function submitApplication(formData: FormData): Promise<{ success: 
       date_of_birth: formData.dateOfBirth,
       nationality: formData.nationality,
       email: formData.email,
-      mobile: `${formData.mobileCountryCode} ${formData.mobile}`,
-      whatsapp: `${formData.whatsappCountryCode} ${formData.whatsapp}`,
-      other_number: formData.otherNumber ? `${formData.otherNumberCountryCode} ${formData.otherNumber}` : null,
+      mobile: `${formData.mobileCountryCode} ${formData.mobile}`.trim(),
+      whatsapp: `${formData.whatsappCountryCode} ${formData.whatsapp}`.trim(),
+      other_number: formData.otherNumber ? `${formData.otherNumberCountryCode} ${formData.otherNumber}`.trim() : null,
       instagram: formData.instagram || null,
-      tiktok: null,
-      website: null,
       governorate: formData.governorate,
       district: formData.district,
       area: formData.area,
@@ -121,12 +121,21 @@ export async function submitApplication(formData: FormData): Promise<{ success: 
 
     console.log("Supabase Database Insert Successful");
 
-    // 2. Call HubSpot Edge Function
+    // 2. Call HubSpot Edge Function via Direct Fetch for maximum reliability
     try {
-      console.log("Invoking HubSpot Edge Function: hubspot-upsert-contact");
+      const functionUrl = `https://boohvdvpdgnvabfhiaxi.supabase.co/functions/v1/hubspot-upsert-contact`;
       
-      const { error: hsErr, data: hsData } = await supabase.functions.invoke("hubspot-upsert-contact", {
-        body: {
+      console.log("Calling HubSpot Function directly:", functionUrl);
+      
+      const response = await fetch(functionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // We use the anon key from the environment if available, otherwise call without it 
+          // since we added CORS headers to the function
+          'Authorization': `Bearer ${(supabase as any).supabaseKey || ''}`
+        },
+        body: JSON.stringify({
           email: formData.email,
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -136,16 +145,18 @@ export async function submitApplication(formData: FormData): Promise<{ success: 
           governorate: formData.governorate ?? null,
           district: formData.district ?? null,
           area: formData.area ?? null,
-        },
+        }),
       });
 
-      if (hsErr) {
-        console.error("HubSpot Edge Function Error:", hsErr);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("HubSpot Function Direct Call Failed:", errorText);
       } else {
-        console.log("HubSpot Sync Response:", hsData);
+        const data = await response.json();
+        console.log("HubSpot Sync Successful:", data);
       }
     } catch (hsInvokeErr) {
-      console.error("Critical Error Invoking HubSpot Function:", hsInvokeErr);
+      console.error("Critical Error in HubSpot Direct Call:", hsInvokeErr);
     }
 
     return { success: true };
