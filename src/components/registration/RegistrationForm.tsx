@@ -14,6 +14,7 @@ import AvailabilityStep from "./steps/AvailabilityStep";
 import ReviewStep from "./steps/ReviewStep";
 import { mainInfoSchema, contactSchema, addressSchema, languagesSchema, appearanceSchema, measurementsSchema } from "@/lib/formValidation";
 import { submitApplication } from "@/lib/submitApplication";
+import { sendToZapier, prepareDataForZapier } from "@/lib/zapierWebhook";
 interface FormData {
   gender: "male" | "female";
   firstName: string;
@@ -269,6 +270,14 @@ const RegistrationForm = () => {
       const result = await submitApplication(formData);
       
       if (result.success) {
+        // Send to Zapier webhook after successful database submission
+        const zapierData = prepareDataForZapier(formData);
+        const zapierResult = await sendToZapier(zapierData);
+        
+        if (!zapierResult.success) {
+          console.warn("Zapier webhook failed, but application was saved:", zapierResult.error);
+        }
+        
         setIsSubmitted(true);
         toast({
           title: "Application Submitted!",
