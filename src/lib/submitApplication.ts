@@ -43,9 +43,9 @@ interface FormData {
   firstName: string;
   middleName: string;
   lastName: string;
-  email: string;
   dateOfBirth: string;
   nationality: string;
+  email: string;
   mobile: string;
   mobileCountryCode: string;
   whatsapp: string;
