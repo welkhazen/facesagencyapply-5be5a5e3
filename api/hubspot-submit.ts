@@ -1,64 +1,51 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+
 /**
  * Serverless API endpoint for HubSpot form submissions
- *
- * This proxies requests to HubSpot to avoid CORS issues.
- * Deploy to Vercel, Netlify, or any serverless platform.
+ * Standard Node.js runtime for better compatibility
  */
-
-export const config = {
-  runtime: 'edge',
-};
 
 const HUBSPOT_API_URL = 'https://api.hubapi.com';
 
-export default async function handler(request: Request): Promise<Response> {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
   // Handle CORS preflight
-  if (request.method === 'OPTIONS') {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
-    });
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
   }
 
   // Only allow POST
-  if (request.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-      status: 405,
-      headers: { 'Content-Type': 'application/json' },
-    });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Get access token from environment (support both variable names)
+  // Get access token from environment
   const accessToken = process.env.HUBSPOT_ACCESS_TOKEN || process.env.HUBSPOT_PRIVATE_APP_TOKEN;
   if (!accessToken) {
-    return new Response(JSON.stringify({ error: 'HubSpot not configured - missing HUBSPOT_ACCESS_TOKEN or HUBSPOT_PRIVATE_APP_TOKEN' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
+    return res.status(500).json({
+      error: 'HubSpot not configured - missing HUBSPOT_ACCESS_TOKEN'
     });
   }
 
   try {
-    const body = await request.json();
-    const { properties, action, contactId } = body;
+    const { properties, action, contactId, searchParams } = req.body;
 
     let hubspotResponse: Response;
 
     if (action === 'search') {
-      // Search for existing contact
       hubspotResponse = await fetch(`${HUBSPOT_API_URL}/crm/v3/objects/contacts/search`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(body.searchParams),
+        body: JSON.stringify(searchParams),
       });
     } else if (action === 'update' && contactId) {
-      // Update existing contact
       hubspotResponse = await fetch(`${HUBSPOT_API_URL}/crm/v3/objects/contacts/${contactId}`, {
         method: 'PATCH',
         headers: {
@@ -68,7 +55,6 @@ export default async function handler(request: Request): Promise<Response> {
         body: JSON.stringify({ properties }),
       });
     } else {
-      // Create new contact
       hubspotResponse = await fetch(`${HUBSPOT_API_URL}/crm/v3/objects/contacts`, {
         method: 'POST',
         headers: {
@@ -82,40 +68,23 @@ export default async function handler(request: Request): Promise<Response> {
     const data = await hubspotResponse.json();
 
     if (!hubspotResponse.ok) {
-      return new Response(JSON.stringify({
+      return res.status(hubspotResponse.status).json({
         success: false,
         error: data.message || 'HubSpot API error',
         details: data
-      }), {
-        status: hubspotResponse.status,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
       });
     }
 
-    return new Response(JSON.stringify({
+    return res.status(200).json({
       success: true,
       contactId: data.id,
       data
-    }), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
     });
   } catch (error) {
-    return new Response(JSON.stringify({
+    console.error('HubSpot API error:', error);
+    return res.status(500).json({
       success: false,
       error: String(error)
-    }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
     });
   }
 }
