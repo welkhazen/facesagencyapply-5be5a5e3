@@ -65,15 +65,18 @@ interface FormData {
 }
 
 export async function submitApplication(formData: FormData): Promise<{ success: boolean; error?: string }> {
+  console.log("Starting application submission for:", formData.email);
+  
   try {
+    // 1. Insert into Supabase
     // @ts-ignore - email column was added manually
-    const { error } = await supabase.from("applications").insert({
+    const { error: dbError } = await supabase.from("applications").insert({
       first_name: formData.firstName,
       middle_name: formData.middleName,
       last_name: formData.lastName,
       date_of_birth: formData.dateOfBirth,
       nationality: formData.nationality,
-      email: formData.email, // Now included
+      email: formData.email,
       mobile: `${formData.mobileCountryCode} ${formData.mobile}`,
       whatsapp: `${formData.whatsappCountryCode} ${formData.whatsapp}`,
       other_number: formData.otherNumber ? `${formData.otherNumberCountryCode} ${formData.otherNumber}` : null,
@@ -111,13 +114,17 @@ export async function submitApplication(formData: FormData): Promise<{ success: 
       photo_urls: [],
     });
 
-    if (error) {
-      console.error("Error submitting application:", error);
-      return { success: false, error: error.message };
+    if (dbError) {
+      console.error("Supabase Database Error:", dbError);
+      return { success: false, error: dbError.message };
     }
 
-    // Call HubSpot Edge Function
+    console.log("Supabase Database Insert Successful");
+
+    // 2. Call HubSpot Edge Function
     try {
+      console.log("Invoking HubSpot Edge Function: hubspot-upsert-contact");
+      
       const { error: hsErr, data: hsData } = await supabase.functions.invoke("hubspot-upsert-contact", {
         body: {
           email: formData.email,
@@ -133,17 +140,17 @@ export async function submitApplication(formData: FormData): Promise<{ success: 
       });
 
       if (hsErr) {
-        console.error("HubSpot sync failed:", hsErr);
+        console.error("HubSpot Edge Function Error:", hsErr);
       } else {
-        console.log("HubSpot sync ok:", hsData);
+        console.log("HubSpot Sync Response:", hsData);
       }
     } catch (hsInvokeErr) {
-      console.error("Error invoking HubSpot function:", hsInvokeErr);
+      console.error("Critical Error Invoking HubSpot Function:", hsInvokeErr);
     }
 
     return { success: true };
   } catch (err) {
-    console.error("Unexpected error:", err);
+    console.error("Unexpected submission error:", err);
     return { success: false, error: "An unexpected error occurred" };
   }
 }
