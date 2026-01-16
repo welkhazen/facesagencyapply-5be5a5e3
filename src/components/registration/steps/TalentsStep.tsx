@@ -484,4 +484,4 @@ const TalentsStep = ({ data, onChange }: TalentsStepProps) => {
   );
 };
 
-export default TalentsStep;
+export default TalentsStep;// Force deploy Fri Jan 16 10:02:17 +04 2026
