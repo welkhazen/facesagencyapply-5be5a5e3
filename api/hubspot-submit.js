@@ -5,7 +5,7 @@
 
 const HUBSPOT_API_URL = 'https://api.hubapi.com';
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   console.log('[API] ========== HubSpot Submit Handler ==========');
   console.log('[API] Method:', req.method);
   console.log('[API] URL:', req.url);
@@ -115,4 +115,4 @@ export default async function handler(req, res) {
       error: String(error)
     });
   }
-}
+};
